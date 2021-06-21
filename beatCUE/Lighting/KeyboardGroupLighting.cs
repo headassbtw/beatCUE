@@ -11,6 +11,7 @@ using CUE.NET.Devices.Keyboard;
 using CUE.NET.Devices.Mouse;
 using CUE.NET.Devices.Headset;
 using CUE.NET.Groups;
+using static BeatmapSaveData;
 
 namespace beatCUE.Lighting
 {
@@ -21,64 +22,67 @@ namespace beatCUE.Lighting
         internal static RectangleLedGroup AlphaNumeric = new RectangleLedGroup(Testing.LightingTest.keyboard, CorsairLedId.LeftCtrl, CorsairLedId.Backspace);
         internal static RectangleLedGroup InBetween = new RectangleLedGroup(Testing.LightingTest.keyboard, CorsairLedId.Insert, CorsairLedId.RightArrow);
 
-        public static void KeyboardFunctionRow(this CorsairKeyboard keyboard, UnityEngine.Color color)
+        public static void KeyboardFunctionRow(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
         {
-            color = color.Ify();
-            CorsairColor cc = color.ToCorsair();
-            keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
-            if (keyboard != null)
+            if (ev.Equals(Configuration.PluginConfig.Instance.KB_FnRow) && keyboard != null)
             {
-                FunctionRow.Brush = new SolidColorBrush(cc);
-                keyboard.Update();
+                color = color.Ify();
+                CorsairColor cc = color.ToCorsair();
+                if (keyboard != null)
+                {
+                    keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
+                    keyboard[CorsairLedId.Mute].Color = cc;
+                    FunctionRow.Brush = new SolidColorBrush(cc);
+                    keyboard.Update();
+                }
+            }
+            
+        }
+        public static void KeyboardNumpad(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
+        {
+            if (ev.Equals(Configuration.PluginConfig.Instance.KB_Numpad) && keyboard != null)
+            {
+                color = color.Ify();
+                CorsairColor cc = color.ToCorsair();
+                if (keyboard != null)
+                {
+                    keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
+                    var b = new SolidColorBrush(cc);
+                    keyboard[CorsairLedId.Keypad0].Color = cc;
+                    keyboard[CorsairLedId.KeypadPeriodAndDelete].Color = cc;
+                    Numpad.Brush = b;
+                    keyboard.Update();
+                }
             }
         }
-        public static void KeyboardLogoRow(this CorsairKeyboard keyboard, UnityEngine.Color color)
+        public static void KeyboardInbetween(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
         {
-            color = color.Ify();
-            CorsairColor cc = color.ToCorsair();
-            keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
-            if (keyboard != null)
+            if (ev.Equals(Configuration.PluginConfig.Instance.KB_InBetween) && keyboard != null)
             {
-                keyboard[CorsairLedId.Mute].Color = cc;
-                keyboard.Update();
+                color = color.Ify();
+                CorsairColor cc = color.ToCorsair();
+                if (keyboard != null)
+                {
+                    keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
+                    var b = new SolidColorBrush(cc);
+                    InBetween.Brush = b;
+                    keyboard.Update();
+                }
             }
         }
-        public static void KeyboardNumpad(this CorsairKeyboard keyboard, UnityEngine.Color color)
+        public static void KeyboardAlphanumeric(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
         {
-            color = color.Ify();
-            CorsairColor cc = color.ToCorsair();
-            keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
-            if (keyboard != null)
+            if (ev.Equals(Configuration.PluginConfig.Instance.KB_Alphanumeric) && keyboard != null)
             {
-                var b = new SolidColorBrush(cc);
-                keyboard[CorsairLedId.Keypad0].Color = cc;
-                keyboard[CorsairLedId.KeypadPeriodAndDelete].Color = cc;
-                Numpad.Brush = b;
-                keyboard.Update();
-            }
-        }
-        public static void KeyboardInbetween(this CorsairKeyboard keyboard, UnityEngine.Color color)
-        {
-            color = color.Ify();
-            CorsairColor cc = color.ToCorsair();
-            keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
-            if (keyboard != null)
-            {
-                var b = new SolidColorBrush(cc);
-                InBetween.Brush = b;
-                keyboard.Update();
-            }
-        }
-        public static void KeyboardAlphanumeric(this CorsairKeyboard keyboard, UnityEngine.Color color)
-        {
-            color = color.Ify();
-            CorsairColor cc = color.ToCorsair();
-            keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
-            if (keyboard != null)
-            {
-                var b = new SolidColorBrush(cc);
-                AlphaNumeric.Brush = b;
-                keyboard.Update();
+                color = color.Ify();
+                CorsairColor cc = color.ToCorsair();
+                if (keyboard != null)
+                {
+                    keyboard.Brush = (SolidColorBrush)CorsairColor.Transparent;
+                    var b = new SolidColorBrush(cc);
+                    AlphaNumeric.Brush = b;
+                    keyboard.Update();
+                }
             }
         }
     }

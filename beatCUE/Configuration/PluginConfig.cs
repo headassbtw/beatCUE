@@ -1,6 +1,8 @@
-﻿/*
+﻿
 using System.Runtime.CompilerServices;
 using IPA.Config.Stores;
+using Newtonsoft.Json;
+using static BeatmapSaveData;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace beatCUE.Configuration
@@ -8,7 +10,11 @@ namespace beatCUE.Configuration
     internal class PluginConfig
     {
         public static PluginConfig Instance { get; set; }
-        public virtual int IntValue { get; set; } = 42; // Must be 'virtual' if you want BSIPA to detect a value change and save the config automatically.
+        public virtual BeatmapEventType KB_Alphanumeric { get; set; }
+        public virtual BeatmapEventType KB_FnRow { get; set; }
+        public virtual BeatmapEventType KB_InBetween { get; set; }
+        public virtual BeatmapEventType KB_Numpad { get; set; }
+        public virtual BeatmapEventType Mouse { get; set; }
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).
@@ -35,4 +41,3 @@ namespace beatCUE.Configuration
         }
     }
 }
-*/

@@ -22,25 +22,11 @@ namespace beatCUE.Harmony_Patches
         static void Postfix(BeatmapEventType ____event, Color color)
         {
             color.Ify();
-            switch (____event)
-            {
-                case BeatmapEventType.Event4:
-                    Testing.LightingTest.MouseLights(color, 0);
-                    break;
-                case BeatmapEventType.Event3:
-                    Testing.LightingTest.keyboard.KeyboardAlphanumeric(color);
-                    break;
-                case BeatmapEventType.Event2:
-                    Testing.LightingTest.keyboard.KeyboardInbetween(color);
-                    break;
-                case BeatmapEventType.Event1:
-                    Testing.LightingTest.keyboard.KeyboardFunctionRow(color);
-                    Testing.LightingTest.keyboard.KeyboardLogoRow(color);
-                    break;
-                case BeatmapEventType.Event0:
-                    Testing.LightingTest.keyboard.KeyboardNumpad(color);
-                    break;
-            }
+            Testing.LightingTest.keyboard.KeyboardAlphanumeric(color, ____event);
+            Testing.LightingTest.keyboard.KeyboardFunctionRow(color, ____event);
+            Testing.LightingTest.keyboard.KeyboardInbetween(color, ____event);
+            Testing.LightingTest.keyboard.KeyboardNumpad(color, ____event);
+            Lighting.MouseGroupLighting.MouseLights(color, ____event);
         }
     }
 }

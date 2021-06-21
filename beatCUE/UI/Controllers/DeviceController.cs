@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
+using BeatSaberMarkupLanguage.Parser;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 
@@ -16,7 +17,8 @@ namespace beatCUE.UI.Controllers
     class DeviceController : BSMLAutomaticViewController
     {
         [UIComponent("device-list")] internal CustomListTableData DeviceList = new CustomListTableData();
-
+        [UIValue("lighting-events")]
+        private List<object> options = new object[] { "Back Lasers", "Ring Lights", "Left Rotating Lasers", "Right Rotating Lasers", "Center Lights", "Boost Light Colors", "Interscope Left", "Interscope Right" }.ToList();
         [UIAction("#post-parse")]
         internal void Setup()
         {
@@ -25,9 +27,13 @@ namespace beatCUE.UI.Controllers
                 DeviceList.data.Add(new CustomListTableData.CustomCellInfo(device.DeviceInfo.Model, device.DeviceInfo.Type.ToString()));
             DeviceList.tableView.ReloadData();
         }
+
+        [UIParams]
+        BSMLParserParams parserParams;
         private string dn = "";
-        private string lc = "";
-        [UIValue("device-name")] internal string DeviceName {
+        [UIValue("device-name")]
+        internal string DeviceName
+        {
             get => dn;
             set
             {
@@ -35,13 +41,50 @@ namespace beatCUE.UI.Controllers
                 NotifyPropertyChanged();
             }
         }
-        [UIValue("led-count")]
-        internal string LEDCount
+        [UIValue("alphanumeric")] string Alphanumeric
         {
-            get => lc;
+            get => Configuration.PluginConfig.Instance.KB_Alphanumeric.ToNamed();
             set
             {
-                lc = value;
+                Configuration.PluginConfig.Instance.KB_Alphanumeric = value.FromNamed();
+                NotifyPropertyChanged();
+            }
+        }
+        [UIValue("functionrow")] string FunctionRow
+        {
+            get => Configuration.PluginConfig.Instance.KB_FnRow.ToNamed();
+            set
+            {
+                Configuration.PluginConfig.Instance.KB_FnRow = value.FromNamed();
+                NotifyPropertyChanged();
+            }
+        }
+        [UIValue("numpad")] string Numpad
+        {
+            get => Configuration.PluginConfig.Instance.KB_Numpad.ToNamed();
+            set
+            {
+                Configuration.PluginConfig.Instance.KB_Numpad = value.FromNamed();
+                NotifyPropertyChanged();
+            }
+        }
+        [UIValue("inbetween")]
+        string InBetween
+        {
+            get => Configuration.PluginConfig.Instance.KB_InBetween.ToNamed();
+            set
+            {
+                Configuration.PluginConfig.Instance.KB_InBetween = value.FromNamed();
+                NotifyPropertyChanged();
+            }
+        }
+        [UIValue("mouse")]
+        string mouse
+        {
+            get => Configuration.PluginConfig.Instance.Mouse.ToNamed();
+            set
+            {
+                Configuration.PluginConfig.Instance.Mouse = value.FromNamed();
                 NotifyPropertyChanged();
             }
         }
@@ -50,8 +93,11 @@ namespace beatCUE.UI.Controllers
         [UIAction("device-select")]
         public void DeviceSelect(TableView _, int row)
         {
-            DeviceName = Plugin.Devices[row].DeviceInfo.Model;
-            LEDCount = $"{Plugin.Devices[row].Leds.ToList().Count()} LEDs";
+            DeviceName = Plugin.Devices[row].DeviceInfo.Model.ToString();
+            if (Plugin.Devices[row].DeviceInfo.Type.ToString().ToLower().Equals("mouse"))
+                parserParams.EmitEvent("mouse-modal");
+            if (Plugin.Devices[row].DeviceInfo.Type.ToString().ToLower().Equals("keyboard"))
+                parserParams.EmitEvent("keyboard-modal");
         }
     }
 }

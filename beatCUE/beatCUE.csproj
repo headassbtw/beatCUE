@@ -55,13 +55,18 @@
       <HintPath>$(BeatSaberDir)\Libs\CUE.NET.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(BeatSaberDir)\Libs\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\System.Drawing.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Main">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
       <Private>False</Private>
@@ -102,22 +107,19 @@
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.UIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.VRModule">
-      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.VRModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\EnumConverter.cs" />
     <Compile Include="Harmony Patches\FloorLightPatch.cs" />
     <Compile Include="Lighting\Extensions.cs" />
     <Compile Include="Lighting\KeyboardGroupLighting.cs" />
+    <Compile Include="Lighting\MouseGroupLighting.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Configuration\PluginConfig.cs" />
     <Compile Include="beatCUEController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\LightingTest.cs" />
     <Compile Include="UI\Controllers\DeviceController.cs" />
-    <Compile Include="UI\Controllers\ZoneController.cs" />
     <Compile Include="UI\FlowCoordinator.cs" />
     <Compile Include="UI\UICreator.cs" />
   </ItemGroup>
@@ -129,7 +131,6 @@
     <None Include="Directory.Build.targets" Condition="Exists('Directory.Build.targets')" />
     <None Include="beatCUE.csproj.user" Condition="Exists('beatCUE.csproj.user')" />
     <EmbeddedResource Include="UI\Views\deviceManagement.bsml" />
-    <EmbeddedResource Include="UI\Views\zoneControls.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">

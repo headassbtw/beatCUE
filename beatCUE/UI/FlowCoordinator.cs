@@ -8,13 +8,10 @@ namespace beatCUE.UI
     class beatCUEFlowCoordinator : FlowCoordinator
     {
         private static DeviceController _deviceController;
-        private static ZoneController _zoneController;
         public void Awake()
         {
             if (!_deviceController)
                 _deviceController = BeatSaberUI.CreateViewController<DeviceController>();
-            if (!_zoneController)
-                _zoneController = BeatSaberUI.CreateViewController<ZoneController>();
         }
 
         protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)

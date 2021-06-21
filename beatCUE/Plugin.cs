@@ -45,8 +45,14 @@ namespace beatCUE
             Log = logger;
             Harmony = new Harmony("com.headassbtw.beatcue");
             Harmony.PatchAll(Assembly.GetExecutingAssembly());
+            
+
             string nativesPath = Path.Combine(UnityGame.InstallPath, "Libs", "Native");
-            if(!File.Exists(Path.Combine(nativesPath, "CUESDK_2015_x86.dll")))
+            if (!Directory.Exists(nativesPath))
+            {
+                Directory.CreateDirectory(nativesPath);
+            }
+            if (!File.Exists(Path.Combine(nativesPath, "CUESDK_2015_x86.dll")))
             {
                 WriteResourceToFile("beatCUE.Libs.x86.CUESDK_2015.dll", Path.Combine(nativesPath, "CUESDK_2015_x86.dll"));
             }
@@ -62,17 +68,12 @@ namespace beatCUE
 
         }
 
-        #region BSIPA Config
-        //Uncomment to use BSIPA's config
-        /*
+        
         [Init]
-        public void InitWithConfig(Config conf)
+        public void InitWithConfig(IPA.Config.Config conf)
         {
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
-            Log.Debug("Config loaded");
         }
-        */
-        #endregion
 
         [OnStart]
         public void OnApplicationStart()

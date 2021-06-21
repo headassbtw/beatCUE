@@ -2,6 +2,7 @@
 <!-- This file contains the build tasks and targets for verifying the manifest, zipping Release builds,
      and copying the plugin to to your Beat Saber folder. Only edit this if you know what you are doing. -->
 <Project>
+	
   <PropertyGroup>
     <BuildTargetsVersion>2.0</BuildTargetsVersion>
     <!--Set this to true if you edit this file to prevent automatic updates-->
