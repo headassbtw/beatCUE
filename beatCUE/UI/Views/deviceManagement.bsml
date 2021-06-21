@@ -1,0 +1,16 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<vertical>
+		<horizontal bg='panel-top' preferred-height='10'>
+			<text font-size='10' text='Devices' font-align='Center'/>
+		</horizontal>
+		<horizontal pad='1'>
+			<vertical preferred-width='45' pad='1'>
+				<list id='device-list' expand-cell='true' select-cell='device-select' list-width='45'/>
+			</vertical>
+			<vertical preferred-width='45' pad='1'>
+				<text text='~device-name' font-align='Center' font-size='7'/>
+				<text text='~led-count' font-align='Center' font-size='7'/>
+			</vertical>
+		</horizontal>
+	</vertical>
+</bg>
