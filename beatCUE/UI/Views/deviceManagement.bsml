@@ -13,7 +13,15 @@
 		<vertical>
 			<text text='~device-name' font-size='10' font-align='Center'/>
 			<text text='Mouse' font-size='5' font-align='Center'/>
-			<dropdown-list-setting choices='lighting-events' text='Color'/>
+			<dropdown-list-setting value='mouse' choices='lighting-events' text='Color'/>
+		</vertical>
+	</modal>
+<modal show-event='headset-modal' move-to-center='true' size-delta-x='90' size-delta-y='35' click-off-closes='true'>
+		<vertical>
+			<text text='~device-name' font-size='10' font-align='Center'/>
+			<text text='Headset' font-size='5' font-align='Center'/>
+			<dropdown-list-setting value='headset-left' choices='lighting-events' text='Color'/>
+			<dropdown-list-setting value='headset-right' choices='lighting-events' text='Color'/>
 		</vertical>
 	</modal>
 	<modal show-event='keyboard-modal' move-to-center='true' size-delta-x='90' size-delta-y='55' click-off-closes='true'>

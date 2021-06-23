@@ -10,8 +10,6 @@ namespace beatCUE.Harmony_Patches
     //[HarmonyPatch("SetColor")]
     public class KeyboardLightPatch
     {
-
-        
         internal static void Postfix(BeatmapEventType ____event, Color color)
         {
             color.Ify();

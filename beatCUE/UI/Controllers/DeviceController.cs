@@ -88,6 +88,26 @@ namespace beatCUE.UI.Controllers
                 NotifyPropertyChanged();
             }
         }
+        [UIValue("headset-right")]
+        string headsetRight
+        {
+            get => Configuration.PluginConfig.Instance.HeadsetRight.ToNamed();
+            set
+            {
+                Configuration.PluginConfig.Instance.HeadsetRight = value.FromNamed();
+                NotifyPropertyChanged();
+            }
+        }
+        [UIValue("headset-left")]
+        string headsetLeft
+        {
+            get => Configuration.PluginConfig.Instance.HeadsetLeft.ToNamed();
+            set
+            {
+                Configuration.PluginConfig.Instance.HeadsetLeft = value.FromNamed();
+                NotifyPropertyChanged();
+            }
+        }
 
 
         [UIAction("device-select")]
@@ -98,6 +118,8 @@ namespace beatCUE.UI.Controllers
                 parserParams.EmitEvent("mouse-modal");
             if (Plugin.Devices[row].DeviceInfo.Type.ToString().ToLower().Equals("keyboard"))
                 parserParams.EmitEvent("keyboard-modal");
+            if (Plugin.Devices[row].DeviceInfo.Type.ToString().ToLower().Equals("headset"))
+                parserParams.EmitEvent("headset-modal");
         }
     }
 }

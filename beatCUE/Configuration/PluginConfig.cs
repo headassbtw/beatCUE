@@ -15,6 +15,8 @@ namespace beatCUE.Configuration
         public virtual BeatmapEventType KB_InBetween { get; set; }
         public virtual BeatmapEventType KB_Numpad { get; set; }
         public virtual BeatmapEventType Mouse { get; set; }
+        public virtual BeatmapEventType HeadsetLeft { get; set; }
+        public virtual BeatmapEventType HeadsetRight { get; set; }
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).

@@ -34,6 +34,7 @@ namespace beatCUE.Testing
             if(keyboard != null)
             {
                 Plugin.Log.Notice("Keyboard was found, patching methods");
+                Lighting.KeyboardGroupLighting.InitLEDZones(keyboard);
                 var postfix = AccessTools.Method(typeof(Harmony_Patches.KeyboardLightPatch), "Postfix");
                 var patch = new HarmonyMethod(postfix)
                 {
@@ -57,10 +58,15 @@ namespace beatCUE.Testing
             }
             if (headset != null)
             {
-                headset.Brush = (SolidColorBrush)CorsairColor.Transparent;
-                headset[headset.GetLeds().ToList().ElementAt(0).Id].Color = new CorsairColor(0, 0, 0);
-                headset[headset.GetLeds().ToList().ElementAt(1).Id].Color = new CorsairColor(0, 0, 0);
-                headset.Update();
-            }        }
+                Plugin.Log.Notice("Headset was found, patching methods");
+                var postfix = AccessTools.Method(typeof(Harmony_Patches.HeadsetLightPatch), "Postfix");
+                var patch = new HarmonyMethod(postfix)
+                {
+                    after = AfterMods
+                };
+
+                Plugin.Harmony.Patch(targetMethod, postfix: patch);
+            }
+        }
     }
 }

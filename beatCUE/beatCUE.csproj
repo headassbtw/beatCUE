@@ -110,9 +110,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\EnumConverter.cs" />
+    <Compile Include="Harmony Patches\HeadsetLightPatch.cs" />
     <Compile Include="Harmony Patches\MouseLightPatch.cs" />
     <Compile Include="Harmony Patches\KeyboardLightPatch.cs" />
     <Compile Include="Lighting\Extensions.cs" />
+    <Compile Include="Lighting\HeadsetGroupLighting.cs" />
     <Compile Include="Lighting\KeyboardGroupLighting.cs" />
     <Compile Include="Lighting\MouseGroupLighting.cs" />
     <Compile Include="Plugin.cs" />
