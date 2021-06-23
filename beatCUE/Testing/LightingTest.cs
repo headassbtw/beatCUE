@@ -9,8 +9,9 @@ using CUE.NET.Devices.Generic;
 using CUE.NET.Devices.Keyboard;
 using CUE.NET.Devices.Mouse;
 using CUE.NET.Devices.Headset;
-using UnityEngine;
+using System.Reflection;
 using static beatCUE.Extensions;
+using HarmonyLib;
 
 namespace beatCUE.Testing
 {
@@ -18,8 +19,11 @@ namespace beatCUE.Testing
     {
         internal static CorsairKeyboard keyboard = CueSDK.KeyboardSDK;
         internal static CorsairHeadset headset = CueSDK.HeadsetSDK;
+        internal static CorsairMouse mouse = CueSDK.MouseSDK;
         internal static void Setup()
         {
+            var AfterMods = new[] { "com.noodle.BeatSaber.Chroma", "com.noodle.BeatSaber.Technicolor" };
+            var targetMethod = AccessTools.Method(typeof(LightSwitchEventEffect), "SetColor");
             var devices = CueSDK.InitializedDevices.ToList();
             Plugin.Devices = devices;
             Plugin.Log.Notice("Corsair Devices:");
@@ -27,8 +31,31 @@ namespace beatCUE.Testing
             {
                 Plugin.Log.Notice($"{device.DeviceInfo.Model} is a {device.DeviceInfo.Type.ToString()} with {device.Leds.Count()} LEDs");
             }
+            if(keyboard != null)
+            {
+                Plugin.Log.Notice("Keyboard was found, patching methods");
+                var postfix = AccessTools.Method(typeof(Harmony_Patches.KeyboardLightPatch), "Postfix");
+                var patch = new HarmonyMethod(postfix)
+                {
+                    after = AfterMods
+                };
 
-            if(headset != null)
+                Plugin.Harmony.Patch(targetMethod, postfix: patch);
+                
+            }
+            if (mouse != null && mouse.Leds.Count() >= 2)
+            {
+                Plugin.Log.Notice("Mouse with 2+ LEDs was found, patching methods");
+                var postfix = AccessTools.Method(typeof(Harmony_Patches.MouseLightPatch), "Postfix");
+                var patch = new HarmonyMethod(postfix)
+                {
+                    after = AfterMods
+                };
+
+                Plugin.Harmony.Patch(targetMethod, postfix: patch);
+
+            }
+            if (headset != null)
             {
                 headset.Brush = (SolidColorBrush)CorsairColor.Transparent;
                 headset[headset.GetLeds().ToList().ElementAt(0).Id].Color = new CorsairColor(0, 0, 0);

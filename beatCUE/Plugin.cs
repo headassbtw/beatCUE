@@ -44,7 +44,7 @@ namespace beatCUE
             Instance = this;
             Log = logger;
             Harmony = new Harmony("com.headassbtw.beatcue");
-            Harmony.PatchAll(Assembly.GetExecutingAssembly());
+            //Harmony.PatchAll(Assembly.GetExecutingAssembly());
             
 
             string nativesPath = Path.Combine(UnityGame.InstallPath, "Libs", "Native");

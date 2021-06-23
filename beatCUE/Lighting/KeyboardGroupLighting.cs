@@ -8,8 +8,6 @@ using CUE.NET.Brushes;
 using CUE.NET.Devices.Generic;
 using CUE.NET.Devices.Generic.Enums;
 using CUE.NET.Devices.Keyboard;
-using CUE.NET.Devices.Mouse;
-using CUE.NET.Devices.Headset;
 using CUE.NET.Groups;
 using static BeatmapSaveData;
 
@@ -17,10 +15,18 @@ namespace beatCUE.Lighting
 {
     static class KeyboardGroupLighting
     {
-        internal static RectangleLedGroup FunctionRow = new RectangleLedGroup(Testing.LightingTest.keyboard, CorsairLedId.Escape, CorsairLedId.ScanNextTrack);
-        internal static RectangleLedGroup Numpad = new RectangleLedGroup(Testing.LightingTest.keyboard, CorsairLedId.NumLock, CorsairLedId.KeypadEnter, 0.9f);
-        internal static RectangleLedGroup AlphaNumeric = new RectangleLedGroup(Testing.LightingTest.keyboard, CorsairLedId.LeftCtrl, CorsairLedId.Backspace);
-        internal static RectangleLedGroup InBetween = new RectangleLedGroup(Testing.LightingTest.keyboard, CorsairLedId.Insert, CorsairLedId.RightArrow);
+        internal static RectangleLedGroup FunctionRow;
+        internal static RectangleLedGroup Numpad;
+        internal static RectangleLedGroup AlphaNumeric;
+        internal static RectangleLedGroup InBetween;
+
+        internal static void InitLEDZones(CorsairKeyboard board)
+        {
+            FunctionRow = new RectangleLedGroup(board, CorsairLedId.Escape, CorsairLedId.ScanNextTrack);
+            Numpad = new RectangleLedGroup(board, CorsairLedId.NumLock, CorsairLedId.KeypadEnter, 0.9f);
+            AlphaNumeric = new RectangleLedGroup(board, CorsairLedId.LeftCtrl, CorsairLedId.Backspace);
+            InBetween = new RectangleLedGroup(board, CorsairLedId.Insert, CorsairLedId.RightArrow);
+        }
 
         public static void KeyboardFunctionRow(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
         {
