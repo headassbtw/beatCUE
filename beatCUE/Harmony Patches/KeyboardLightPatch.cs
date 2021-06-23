@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 using static BeatmapSaveData;
-using static beatCUE.Lighting.KeyboardGroupLighting;
 using beatCUE.Testing;
 
 namespace beatCUE.Harmony_Patches
@@ -13,11 +12,10 @@ namespace beatCUE.Harmony_Patches
         internal static void Postfix(BeatmapEventType ____event, Color color)
         {
             color.Ify();
-            
-            LightingTest.keyboard.KeyboardAlphanumeric(color, ____event);
-            LightingTest.keyboard.KeyboardFunctionRow(color, ____event);
-            LightingTest.keyboard.KeyboardInbetween(color, ____event);
-            LightingTest.keyboard.KeyboardNumpad(color, ____event);
+            Lighting.KeyboardGroupLighting.KeyboardAlphanumeric(color, ____event);
+            Lighting.KeyboardGroupLighting.KeyboardFunctionRow(color, ____event);
+            Lighting.KeyboardGroupLighting.KeyboardInbetween(color, ____event);
+            Lighting.KeyboardGroupLighting.KeyboardNumpad(color, ____event);
         }
     }
 }

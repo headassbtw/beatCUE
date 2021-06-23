@@ -19,6 +19,7 @@ namespace beatCUE.Lighting
         internal static RectangleLedGroup Numpad;
         internal static RectangleLedGroup AlphaNumeric;
         internal static RectangleLedGroup InBetween;
+        internal static CorsairKeyboard keyboard = CueSDK.KeyboardSDK;
 
         internal static void InitLEDZones(CorsairKeyboard board)
         {
@@ -28,7 +29,7 @@ namespace beatCUE.Lighting
             InBetween = new RectangleLedGroup(board, CorsairLedId.Insert, CorsairLedId.RightArrow);
         }
 
-        public static void KeyboardFunctionRow(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
+        public static void KeyboardFunctionRow(UnityEngine.Color color, BeatmapEventType ev)
         {
             if (ev.Equals(Configuration.PluginConfig.Instance.KB_FnRow) && keyboard != null)
             {
@@ -44,7 +45,7 @@ namespace beatCUE.Lighting
             }
             
         }
-        public static void KeyboardNumpad(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
+        public static void KeyboardNumpad(UnityEngine.Color color, BeatmapEventType ev)
         {
             if (ev.Equals(Configuration.PluginConfig.Instance.KB_Numpad) && keyboard != null)
             {
@@ -61,7 +62,7 @@ namespace beatCUE.Lighting
                 }
             }
         }
-        public static void KeyboardInbetween(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
+        public static void KeyboardInbetween(UnityEngine.Color color, BeatmapEventType ev)
         {
             if (ev.Equals(Configuration.PluginConfig.Instance.KB_InBetween) && keyboard != null)
             {
@@ -76,7 +77,7 @@ namespace beatCUE.Lighting
                 }
             }
         }
-        public static void KeyboardAlphanumeric(this CorsairKeyboard keyboard, UnityEngine.Color color, BeatmapEventType ev)
+        public static void KeyboardAlphanumeric(UnityEngine.Color color, BeatmapEventType ev)
         {
             if (ev.Equals(Configuration.PluginConfig.Instance.KB_Alphanumeric) && keyboard != null)
             {
