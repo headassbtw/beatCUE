@@ -5,9 +5,9 @@
   "author": "headassbtw",
   "version": "1.2.0",
   "description": "",
-  "gameVersion": "1.16.1",
+  "gameVersion": "1.16.2",
   "dependsOn": {
-    "BSIPA": "^4.0.5"
+    "BSIPA": "^4.1.6"
   },
   "features": []
 }
