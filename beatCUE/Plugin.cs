@@ -9,12 +9,12 @@ using IPA.Config.Stores;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
-using CUE.NET;
-using CUE.NET.Devices.Keyboard;
 using System.IO;
 using System.Reflection;
 using HarmonyLib;
 using BeatSaberMarkupLanguage;
+using OpenRGB.NET;
+using OpenRGB.NET.Models;
 
 namespace beatCUE
 {
@@ -24,7 +24,8 @@ namespace beatCUE
         internal static Plugin Instance { get; private set; }
         internal static IPALogger Log { get; private set; }
         internal static Harmony Harmony { get; private set; }
-        internal static List<CUE.NET.Devices.ICueDevice> Devices;
+        internal static List<Device> Devices { get; private set; }
+        internal static OpenRGBClient Client { get; private set; }
 
         public void WriteResourceToFile(string resourceName, string fileName)
         {
@@ -41,31 +42,25 @@ namespace beatCUE
         [Init]
         public void Init(IPALogger logger)
         {
+            var libPath = Path.Combine(UnityGame.InstallPath, "Libs", "OpenRGB.NET.dll");
+            if(!File.Exists(libPath))
+                WriteResourceToFile("BeatCUE.Libs.OpenRGB.NET.dll", libPath);
+            Client = new OpenRGBClient(name: Assembly.GetExecutingAssembly().GetName().Name, autoconnect: true, timeout: 100000);
+            Devices = Client.GetAllControllerData().ToList();
             Instance = this;
             Log = logger;
             Harmony = new Harmony("com.headassbtw.beatcue");
             //Harmony.PatchAll(Assembly.GetExecutingAssembly());
+
             
-
-            string nativesPath = Path.Combine(UnityGame.InstallPath, "Libs", "Native");
-            if (!Directory.Exists(nativesPath))
-            {
-                Directory.CreateDirectory(nativesPath);
-            }
-            if (!File.Exists(Path.Combine(nativesPath, "CUESDK_2015_x86.dll")))
-            {
-                WriteResourceToFile("beatCUE.Libs.x86.CUESDK_2015.dll", Path.Combine(nativesPath, "CUESDK_2015_x86.dll"));
-            }
-            if (!File.Exists(Path.Combine(nativesPath, "CUESDK_2015_x64.dll")))
-            {
-                WriteResourceToFile("beatCUE.Libs.x64.CUESDK_2015.dll", Path.Combine(nativesPath, "CUESDK_2015_x64.dll"));
-            }
-            CueSDK.Initialize();
+             
             Log.Info("beatCUE initialized.");
-            Testing.LightingTest.Setup();
-            beatCUE.UI.UICreator.CreateMenu();
-
-
+            if (Client.Connected)
+            {
+                Testing.LightingTest.Setup();
+                beatCUE.UI.UICreator.CreateMenu();
+            }
+            
         }
 
         
@@ -86,7 +81,7 @@ namespace beatCUE
         [OnExit]
         public void OnApplicationQuit()
         {
-            Log.Debug("OnApplicationQuit");
+            Client.Dispose();
 
         }
     }

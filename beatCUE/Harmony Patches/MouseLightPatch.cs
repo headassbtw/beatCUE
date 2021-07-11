@@ -9,7 +9,6 @@ namespace beatCUE.Harmony_Patches
         static void Postfix(BeatmapEventType ____event, Color color)
         {
             color.Ify();
-            Lighting.MouseGroupLighting.MouseLights(color, ____event);
         }
     }
 }

@@ -50,15 +50,13 @@
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="CUE.NET, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <Private>False</Private>
-      <HintPath>$(BeatSaberDir)\Libs\CUE.NET.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(BeatSaberDir)\Libs\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="OpenRGB.NET, Version=1.7.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Steam\steamapps\common\Beat Saber\Libs\OpenRGB.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -143,12 +141,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Libs\Wrapper\CUE.NET.dll" />
+    <EmbeddedResource Include="Libs\OpenRGB.NET.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Libs\x64\CUESDK_2015.dll" />
-    <EmbeddedResource Include="Libs\x86\CUESDK_2015.dll" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

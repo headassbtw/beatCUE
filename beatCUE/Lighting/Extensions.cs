@@ -1,5 +1,4 @@
-﻿using CUE.NET.Devices.Generic;
-using static BeatmapSaveData;
+﻿using static BeatmapSaveData;
 
 namespace beatCUE
 {
@@ -62,10 +61,6 @@ namespace beatCUE
             UnityEngine.Color.RGBToHSV(color, out H, out S, out V);
             V = color.a * 255;
             return UnityEngine.Color.HSVToRGB(H, S, V);
-        }
-        public static CorsairColor ToCorsair(this UnityEngine.Color color)
-        {
-            return new CorsairColor((byte)color.r, (byte)color.g, (byte)color.b);
         }
     }
 }

@@ -12,10 +12,6 @@ namespace beatCUE.Harmony_Patches
         internal static void Postfix(BeatmapEventType ____event, Color color)
         {
             color.Ify();
-            Lighting.KeyboardGroupLighting.KeyboardAlphanumeric(color, ____event);
-            Lighting.KeyboardGroupLighting.KeyboardFunctionRow(color, ____event);
-            Lighting.KeyboardGroupLighting.KeyboardInbetween(color, ____event);
-            Lighting.KeyboardGroupLighting.KeyboardNumpad(color, ____event);
         }
     }
 }

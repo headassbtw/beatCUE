@@ -24,12 +24,14 @@ namespace beatCUE.UI.Controllers
         {
             DeviceList.data.Clear();
             foreach (var device in Plugin.Devices)
-                DeviceList.data.Add(new CustomListTableData.CustomCellInfo(device.DeviceInfo.Model, device.DeviceInfo.Type.ToString()));
+                DeviceList.data.Add(new CustomListTableData.CustomCellInfo(device.Name, device.Type.ToString()));
             DeviceList.tableView.ReloadData();
         }
 
         [UIParams]
+#pragma warning disable 649 //BSML handles this lol
         BSMLParserParams parserParams;
+#pragma warning restore 649
         private string dn = "";
         [UIValue("device-name")]
         internal string DeviceName
@@ -113,13 +115,15 @@ namespace beatCUE.UI.Controllers
         [UIAction("device-select")]
         public void DeviceSelect(TableView _, int row)
         {
-            DeviceName = Plugin.Devices[row].DeviceInfo.Model.ToString();
-            if (Plugin.Devices[row].DeviceInfo.Type.ToString().ToLower().Equals("mouse"))
+            DeviceName = Plugin.Devices[row].Name.ToString();
+            //to be replaced with dynamic zone-recognizing things
+            /*
+            if (Plugin.Devices[row].Type.ToString().ToLower().Equals("mouse"))
                 parserParams.EmitEvent("mouse-modal");
-            if (Plugin.Devices[row].DeviceInfo.Type.ToString().ToLower().Equals("keyboard"))
+            if (Plugin.Devices[row].Type.ToString().ToLower().Equals("keyboard"))
                 parserParams.EmitEvent("keyboard-modal");
-            if (Plugin.Devices[row].DeviceInfo.Type.ToString().ToLower().Equals("headset"))
-                parserParams.EmitEvent("headset-modal");
+            if (Plugin.Devices[row].Type.ToString().ToLower().Equals("headset"))
+                parserParams.EmitEvent("headset-modal");*/
         }
     }
 }
