@@ -15,6 +15,7 @@ using HarmonyLib;
 using BeatSaberMarkupLanguage;
 using OpenRGB.NET;
 using OpenRGB.NET.Models;
+using Color = UnityEngine.Color;
 
 namespace beatCUE
 {
@@ -69,13 +70,13 @@ namespace beatCUE
         {
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
         }
-
+        
         [OnStart]
         public void OnApplicationStart()
         {
             Log.Debug("OnApplicationStart");
-            new GameObject("beatCUEController").AddComponent<beatCUEController>();
-
+            beatCUEController go = new GameObject("beatCUEController").AddComponent<beatCUEController>();
+            go.gameObject.AddComponent<GetKeyPress>();
         }
 
         [OnExit]
@@ -83,6 +84,18 @@ namespace beatCUE
         {
             Client.Dispose();
 
+        }
+    }
+    internal class GetKeyPress : MonoBehaviour
+    {
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+                Harmony_Patches.TestLightPatch.SHITFUCK(Color.red);
+            if (Input.GetKeyDown(KeyCode.S))
+                Harmony_Patches.TestLightPatch.SHITFUCK(Color.green);
+            if (Input.GetKeyDown(KeyCode.D))
+                Harmony_Patches.TestLightPatch.SHITFUCK(Color.blue);
         }
     }
 }

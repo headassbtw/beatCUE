@@ -1,4 +1,5 @@
-﻿using static BeatmapSaveData;
+﻿using OpenRGB.NET.Models;
+using static BeatmapSaveData;
 
 namespace beatCUE
 {
@@ -52,7 +53,10 @@ namespace beatCUE
                     //11 is unused
             }
         }
-
+        /// <summary>
+        /// takes an RGBA color and turns the alpha channel into the brightness
+        /// </summary>
+        /// <returns>modified color</returns>
         public static UnityEngine.Color Ify(this UnityEngine.Color color)
         {
             float H = 0;
@@ -62,5 +66,17 @@ namespace beatCUE
             V = color.a * 255;
             return UnityEngine.Color.HSVToRGB(H, S, V);
         }
+
+        public static OpenRGB.NET.Models.Color FromUnity(this UnityEngine.Color color)
+        {
+            float h;
+            float s;
+            float v;
+            UnityEngine.Color.RGBToHSV(color, out h,out s, out v);
+            var hc = Color.FromHsv(h, s, v);
+            return hc;
+        }
+
+        
     }
 }

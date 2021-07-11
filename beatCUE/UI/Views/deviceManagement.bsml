@@ -4,34 +4,14 @@
 			<text font-size='10' text='Devices' font-align='Center'/>
 		</horizontal>
 		<horizontal pad='1'>
-			<vertical preferred-width='45' pad='1'>
+			<vertical preferred-width='60' pad='1'>
+				<text text="Devices"/>
 				<list id='device-list' expand-cell='true' select-cell='device-select' list-width='90'/>
+			</vertical>
+			<vertical preferred-width='30' pad='1'>
+				<text text="Zones"/>
+				<list id='zone-list' expand-cell='true' select-cell='zone-select' list-width='90'/>
 			</vertical>
 		</horizontal>
 	</vertical>
-	<modal show-event='mouse-modal' move-to-center='true' size-delta-x='90' size-delta-y='25' click-off-closes='true'>
-		<vertical>
-			<text text='~device-name' font-size='10' font-align='Center'/>
-			<text text='Mouse' font-size='5' font-align='Center'/>
-			<dropdown-list-setting value='mouse' choices='lighting-events' text='Color'/>
-		</vertical>
-	</modal>
-<modal show-event='headset-modal' move-to-center='true' size-delta-x='90' size-delta-y='35' click-off-closes='true'>
-		<vertical>
-			<text text='~device-name' font-size='10' font-align='Center'/>
-			<text text='Headset' font-size='5' font-align='Center'/>
-			<dropdown-list-setting value='headset-left' choices='lighting-events' text='Left'/>
-			<dropdown-list-setting value='headset-right' choices='lighting-events' text='Right'/>
-		</vertical>
-	</modal>
-	<modal show-event='keyboard-modal' move-to-center='true' size-delta-x='90' size-delta-y='55' click-off-closes='true'>
-		<vertical>
-			<text text='~device-name' font-size='10' font-align='Center'/>
-			<text text='Keyboard' font-size='5' font-align='Center'/>
-			<dropdown-list-setting value='alphanumeric' choices='lighting-events' text='Alphanumeric Block' apply-on-change='true' bind-value='true'/>
-			<dropdown-list-setting value='functionrow' choices='lighting-events' text='Function Row' apply-on-change='true' bind-value='true'/>
-			<dropdown-list-setting value='numpad' choices='lighting-events' text='Numpad' apply-on-change='true' bind-value='true'/>
-			<dropdown-list-setting value='inbetween' choices='lighting-events' text='In Between' apply-on-change='true' bind-value='true'/>
-		</vertical>
-	</modal>
 </bg>

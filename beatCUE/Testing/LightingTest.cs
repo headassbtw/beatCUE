@@ -17,11 +17,24 @@ namespace beatCUE.Testing
             var targetMethod = AccessTools.Method(typeof(LightSwitchEventEffect), "SetColor");
 
             var devices = Plugin.Devices;
-            Plugin.Log.Notice("Corsair Devices:");
+            Plugin.Log.Notice("RGB Devices:");
             foreach(var device in devices)
             {
                 Plugin.Log.Notice($"{device.Name} is a {device.Type.ToString()} with {device.Leds.Count()} LEDs");
             }
+            #if DEBUG
+            {
+                Plugin.Log.Notice("Patching debug method");
+                var postfix = AccessTools.Method(typeof(Harmony_Patches.TestLightPatch), "Postfix");
+                var patch = new HarmonyMethod(postfix)
+                {
+                    after = AfterMods
+                };
+
+                Plugin.Harmony.Patch(targetMethod, postfix: patch);
+                
+            }
+            #endif
             /*if(keyboard != null)
             {
                 Plugin.Log.Notice("Keyboard was found, patching methods");
