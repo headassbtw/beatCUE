@@ -11,6 +11,8 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using OpenRGB.NET.Enums;
 using OpenRGB.NET.Models;
+using UnityEngine;
+using Color = UnityEngine.Color;
 
 namespace beatCUE.UI.Controllers
 {
@@ -67,48 +69,8 @@ namespace beatCUE.UI.Controllers
             CurrentZone = row;
             Harmony_Patches.TestLightPatch.device = CurrentDevice;
             Harmony_Patches.TestLightPatch.zone = row;
-            Plugin.Client.UpdateZone(CurrentDevice, row, new[] { new Color(255, 0, 0) });
-            
-            var c = new Color[1];
-            c[0] = new Color(255, 255, 255);
-            Plugin.Client.UpdateZone(CurrentDevice, row, c);
-            var colors = new Color[Plugin.Devices[CurrentDevice].Zones[row].LedCount];
-            var colorss = new List<Color>();
-            for (int i = 0; i < Plugin.Devices[CurrentDevice].Zones[row].LedCount; i++)
-            {
-                colorss.Add(new Color(255,255,255));
-            }
-            colors = colorss.ToArray();
-            switch (Plugin.Devices[CurrentDevice].Zones[row].Type)
-            {
-                case ZoneType.Linear:
-                    //var colors = Color.GetHueRainbow((int)Plugin.Devices[CurrentDevice].Zones[row].LedCount);
-                    Plugin.Client.UpdateZone(CurrentDevice, row, colors);
-                    break;
-                case ZoneType.Single:
-                    Plugin.Client.UpdateZone(CurrentDevice, row, colors);
-                    break;
-                case ZoneType.Matrix:
-                    var yeet = 2 * Math.PI / Plugin.Devices[CurrentDevice].Zones[row].MatrixMap.Width;
-                    var rainbow = Color.GetHueRainbow((int)Plugin.Devices[CurrentDevice].Zones[row].MatrixMap.Width).ToArray();
-                    //var rainbow = Color.GetSinRainbow((int)zone.MatrixMap.Width).ToArray();
-
-                    var matrix = Enumerable.Range(0, (int)Plugin.Devices[CurrentDevice].Zones[row].LedCount).Select(__ => new Color()).ToArray();
-                    for (int k = 0; k < Plugin.Devices[CurrentDevice].Zones[row].MatrixMap.Width; k++)
-                    {
-                        for (int l = 0; l < Plugin.Devices[CurrentDevice].Zones[row].MatrixMap.Height; l++)
-                        {
-                            var index = Plugin.Devices[CurrentDevice].Zones[row].MatrixMap.Matrix[l, k];
-                            if (index != uint.MaxValue)
-                            {
-                                matrix[index] = rainbow[k].Clone();
-                            }
-                        }
-                    }
-                    Plugin.Client.UpdateZone(CurrentDevice, row, matrix);
-                    break;
-            }
-            //Plugin.Devices[CurrentDevice].Zones[row].Type = ZoneType.Single;
+            if(Plugin.Devices[CurrentDevice].Zones[row].LedCount > 0)
+            Harmony_Patches.TestLightPatch.SHITFUCK(Color.white);
         }
     }
 }

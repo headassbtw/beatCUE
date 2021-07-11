@@ -15,7 +15,7 @@ namespace beatCUE.Harmony_Patches
         internal static int device;
         internal static void SHITFUCK(UnityEngine.Color color)
         {
-            color.Ify();
+            //color.Ify();
             var orgbcolor = color.FromUnity();
             var colors = new Color[Plugin.Devices[device].Zones[zone].LedCount];
             var colorss = new List<Color>();
@@ -24,34 +24,14 @@ namespace beatCUE.Harmony_Patches
                 colorss.Add(orgbcolor);
             }
             colors = colorss.ToArray();
-            switch (Plugin.Devices[device].Zones[zone].Type)
+            for (int di = 0; di < Plugin.Client.GetControllerCount(); di++)
             {
-                case ZoneType.Linear:
-                    //var colors = Color.GetHueRainbow((int)Plugin.Devices[device].Zones[row].LedCount);
-                    Plugin.Client.UpdateZone(device, zone, colors);
-                    break;
-                case ZoneType.Single:
-                    Plugin.Client.UpdateZone(device, zone, colors);
-                    break;
-                case ZoneType.Matrix:
-                    var yeet = 2 * Math.PI / Plugin.Devices[device].Zones[zone].MatrixMap.Width;
-                    var rainbow = Color.GetHueRainbow((int)Plugin.Devices[device].Zones[zone].MatrixMap.Width).ToArray();
-                    //var rainbow = Color.GetSinRainbow((int)zone.MatrixMap.Width).ToArray();
+                var Device = Plugin.Client.GetControllerData(di);
+                //openRGBColors = new OpenRGB.NET.Models.Color[device.Colors.Length];
+                for (int i = 0; i < colors.Length; i++)
+                    colors[i] = color.FromUnity();
 
-                    var matrix = Enumerable.Range(0, (int)Plugin.Devices[device].Zones[zone].LedCount).Select(__ => new Color()).ToArray();
-                    for (int k = 0; k < Plugin.Devices[device].Zones[zone].MatrixMap.Width; k++)
-                    {
-                        for (int l = 0; l < Plugin.Devices[device].Zones[zone].MatrixMap.Height; l++)
-                        {
-                            var index = Plugin.Devices[device].Zones[zone].MatrixMap.Matrix[l, k];
-                            if (index != uint.MaxValue)
-                            {
-                                matrix[index] = rainbow[k].Clone();
-                            }
-                        }
-                    }
-                    Plugin.Client.UpdateZone(device, zone, matrix);
-                    break;
+                Plugin.Client.UpdateLeds(di, colors);
             }
         }
         static void Postfix(BeatmapEventType ____event, UnityEngine.Color color)
