@@ -69,14 +69,12 @@ namespace beatCUE
 
         public static OpenRGB.NET.Models.Color FromUnity(this UnityEngine.Color color)
         {
-            float h;
-            float s;
-            float v;
-            UnityEngine.Color.RGBToHSV(color, out h,out s, out v);
-            var hc = Color.FromHsv(h, s, v);
+            var hc = new OpenRGB.NET.Models.Color((byte) color.r, (byte) color.g, (byte) color.b);
+            if(color.r != hc.R)
+                if(color.g != hc.G)
+                    if(color.b != hc.B)
+                        Plugin.Log.Warn("Color conversion completed, but the blue values may not be the same!");
             return hc;
         }
-
-        
     }
 }

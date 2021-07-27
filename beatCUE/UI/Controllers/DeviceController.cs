@@ -34,9 +34,9 @@ namespace beatCUE.UI.Controllers
                 DeviceList.data.Add(new CustomListTableData.CustomCellInfo(device.Name, device.Type.ToString()));
             DeviceList.tableView.ReloadData();
         }
-
-        [UIParams]
+        
 #pragma warning disable 649 //BSML handles this lol
+        [UIParams]
         BSMLParserParams parserParams;
 #pragma warning restore 649
         private string dn = "";
@@ -70,7 +70,7 @@ namespace beatCUE.UI.Controllers
             Harmony_Patches.TestLightPatch.device = CurrentDevice;
             Harmony_Patches.TestLightPatch.zone = row;
             if(Plugin.Devices[CurrentDevice].Zones[row].LedCount > 0)
-            Harmony_Patches.TestLightPatch.SHITFUCK(Color.white);
+                Harmony_Patches.TestLightPatch.SHITFUCK(Color.white);
         }
     }
 }

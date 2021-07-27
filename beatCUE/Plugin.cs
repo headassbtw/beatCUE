@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
 using System.IO;
 using System.Reflection;
+using beatCUE.Harmony_Patches;
 using HarmonyLib;
 using BeatSaberMarkupLanguage;
 using OpenRGB.NET;
@@ -25,7 +26,7 @@ namespace beatCUE
         internal static Plugin Instance { get; private set; }
         internal static IPALogger Log { get; private set; }
         internal static Harmony Harmony { get; private set; }
-        internal static List<Device> Devices { get; private set; }
+        internal static Device[] Devices { get; private set; }
         internal static OpenRGBClient Client { get; private set; }
 
         public void WriteResourceToFile(string resourceName, string fileName)
@@ -47,7 +48,7 @@ namespace beatCUE
             if(!File.Exists(libPath))
                 WriteResourceToFile("BeatCUE.Libs.OpenRGB.NET.dll", libPath);
             Client = new OpenRGBClient(name: Assembly.GetExecutingAssembly().GetName().Name, autoconnect: true, timeout: 100000);
-            Devices = Client.GetAllControllerData().ToList();
+            Devices = Client.GetAllControllerData();
             Instance = this;
             Log = logger;
             Harmony = new Harmony("com.headassbtw.beatcue");
@@ -55,11 +56,14 @@ namespace beatCUE
 
             
              
-            Log.Info("beatCUE initialized.");
+            //if the client is connected, start up and set up the rest of the mod
+            //this is to prevent people without openRGB running from saying "hurdurr no devices"
             if (Client.Connected)
             {
                 Testing.LightingTest.Setup();
                 beatCUE.UI.UICreator.CreateMenu();
+                TestLightPatch.SHITFUCK(UnityEngine.Color.green);
+                //beatCUEController go = new GameObject("beatCUEController").AddComponent<beatCUEController>();
             }
             
         }
@@ -79,23 +83,33 @@ namespace beatCUE
             go.gameObject.AddComponent<GetKeyPress>();
         }
 
-        [OnExit]
-        public void OnApplicationQuit()
+        internal static void AllLights(Color color)
         {
-            Client.Dispose();
-
+            color.Ify();
+            for (int i = 0; i < Plugin.Devices.Length; i++)
+            {
+                var leds = Enumerable.Range(0, Plugin.Devices[i].Colors.Length)
+                    .Select(_ => color.FromUnity())
+                    .ToArray();
+                Plugin.Client.UpdateLeds(i, leds);
+            }
         }
+        
+        
+        
+        [OnExit]
+        public void OnApplicationQuit() => Client.Dispose();
     }
     internal class GetKeyPress : MonoBehaviour
     {
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.A))
-                Harmony_Patches.TestLightPatch.SHITFUCK(Color.red);
+                beatCUE.Plugin.AllLights(Color.red);
             if (Input.GetKeyDown(KeyCode.S))
-                Harmony_Patches.TestLightPatch.SHITFUCK(Color.green);
+                beatCUE.Plugin.AllLights(Color.green);
             if (Input.GetKeyDown(KeyCode.D))
-                Harmony_Patches.TestLightPatch.SHITFUCK(Color.blue);
+                beatCUE.Plugin.AllLights(Color.blue);
         }
     }
 }

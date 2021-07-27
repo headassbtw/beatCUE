@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using beatCUE.Harmony_Patches;
 using UnityEngine;
 
 namespace beatCUE
@@ -49,7 +50,7 @@ namespace beatCUE
         /// </summary>
         private void Update()
         {
-
+            
         }
 
         /// <summary>
@@ -57,7 +58,6 @@ namespace beatCUE
         /// </summary>
         private void LateUpdate()
         {
-
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace beatCUE.UI
         {
             if (!Created)
             {
-                MenuButton menuButton = new MenuButton("beatCUE", "Manage Corsair lighting integration", ShowFlow);
+                MenuButton menuButton = new MenuButton("beatCUE", "Manage lighting integration", ShowFlow);
                 MenuButtons.instance.RegisterButton(menuButton);
                 Created = true;
             }
