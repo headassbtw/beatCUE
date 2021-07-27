@@ -30,7 +30,7 @@ namespace beatCUE.UI.Controllers
         internal void Setup()
         {
             DeviceList.data.Clear();
-            foreach (var device in Plugin.Devices)
+            foreach (var device in Plugin.Instance.Devices)
                 DeviceList.data.Add(new CustomListTableData.CustomCellInfo(device.Name, device.Type.ToString()));
             DeviceList.tableView.ReloadData();
         }
@@ -55,9 +55,9 @@ namespace beatCUE.UI.Controllers
         public void DeviceSelect(TableView _, int row)
         {
             CurrentDevice = row;
-            DeviceName = Plugin.Devices[row].Name.ToString();
+            DeviceName = Plugin.Instance.Devices[row].Name.ToString();
             ZoneList.data.Clear();
-            foreach (var zone in Plugin.Devices[row].Zones)
+            foreach (var zone in Plugin.Instance.Devices[row].Zones)
             {
                 ZoneList.data.Add((new CustomListTableData.CustomCellInfo(zone.Name, $"{zone.LedCount} LEDs")));
             }
@@ -69,8 +69,8 @@ namespace beatCUE.UI.Controllers
             CurrentZone = row;
             Harmony_Patches.TestLightPatch.device = CurrentDevice;
             Harmony_Patches.TestLightPatch.zone = row;
-            if(Plugin.Devices[CurrentDevice].Zones[row].LedCount > 0)
-                Harmony_Patches.TestLightPatch.SHITFUCK(Color.white);
+            if(Plugin.Instance.Devices[CurrentDevice].Zones[row].LedCount > 0)
+                Plugin.AllLights(Color.white);
         }
     }
 }

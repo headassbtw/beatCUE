@@ -16,7 +16,7 @@ namespace beatCUE.Testing
             var AfterMods = new[] { "com.noodle.BeatSaber.Chroma", "com.noodle.BeatSaber.Technicolor" };
             var targetMethod = AccessTools.Method(typeof(LightSwitchEventEffect), "SetColor");
 
-            var devices = Plugin.Devices;
+            var devices = Plugin.Instance.Devices;
             Plugin.Log.Notice("RGB Devices:");
             foreach(var device in devices)
             {

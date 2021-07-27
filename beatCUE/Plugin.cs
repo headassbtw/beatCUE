@@ -26,8 +26,8 @@ namespace beatCUE
         internal static Plugin Instance { get; private set; }
         internal static IPALogger Log { get; private set; }
         internal static Harmony Harmony { get; private set; }
-        internal static Device[] Devices { get; private set; }
-        internal static OpenRGBClient Client { get; private set; }
+        internal Device[] Devices { get; private set; }
+        internal OpenRGBClient Client { get; private set; }
 
         public void WriteResourceToFile(string resourceName, string fileName)
         {
@@ -86,12 +86,12 @@ namespace beatCUE
         internal static void AllLights(Color color)
         {
             color.Ify();
-            for (int i = 0; i < Plugin.Devices.Length; i++)
+            for (int i = 0; i < Plugin.Instance.Devices.Length; i++)
             {
-                var leds = Enumerable.Range(0, Plugin.Devices[i].Colors.Length)
+                var leds = Enumerable.Range(0, Plugin.Instance.Devices[i].Colors.Length)
                     .Select(_ => color.FromUnity())
                     .ToArray();
-                Plugin.Client.UpdateLeds(i, leds);
+                Plugin.Instance.Client.UpdateLeds(i, leds);
             }
         }
         
